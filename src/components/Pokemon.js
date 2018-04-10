@@ -1,65 +1,69 @@
-import React, { Component } from 'react';
+import React from 'react';
 import pokemonService from '../services/pokemon.service';
 
-class Pokemon extends Component {
-  constructor(props){
+class Pokemon extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
-      searchString: 'bulbasaur',
+      searchString: 'charmeleon',
       weight: '',
       abilities: []
     }
   }
 
- getPokemon = () => {
-  pokemonService.getPokemon(this.state.searchString).then((response) => {
-    console.log(response);
-    const pokemon = response.data
-    console.log(pokemon)
-    this.setState({
-      abilities: pokemon.abilities,
-      weight: pokemon.weight,
-      spriteBack: pokemon.sprites.back_default,
-      spriteFront: pokemon.sprites.front_default
-      
+  getPokemon = (e) => {
+    e.preventDefault();
+    pokemonService.getPokemon(this.state.searchString).then((response) => {
+      console.log(response)
+      const pokemon = response.data
+      this.setState({
+        abilities: pokemon.abilities,
+        weight: pokemon.weight,
+        spriteBack: pokemon.sprites.back_default,
+        spriteFront: pokemon.sprites.front_default
+
+      })
+    }).catch((err) => {
+      console.log(err);
     })
-  }).catch((err) => {
-    console.log(err);
-  })
- }
- 
- handleChange = (event) => {
-  this.setState({searchString: event.target.value});
-}
+  }
+
+  handleChange = (event) => {
+    this.setState({ searchString: event.target.value });
+  }
 
 
   render() {
-    console.log(this.state)
+    
     return (
-      <div className="App">
-        <br />
-        <input type="text" value={this.state.searchString} onChange={this.handleChange} />
-        <button onClick={this.getPokemon}>
+      <div className="container pokemonSection">
+        <div>
+          <p>Pokemon:
+            <img src={this.state.spriteFront} alt="" />
+            <img src={this.state.spriteBack} alt="" />
+          </p>
+          <p>Weight: {this.state.weight}</p>
+          {
+            this.state.abilities.map((ability) => {
+              return (
+                <div key={ability.slot}>
+                  <h4>Ability: </h4>
+                  <p>{ability.ability.name}</p>
+                </div>
+              )
+            })
+          }
+        </div>
+        
+
+        <form className="formSection form-inline justify-content-center" onSubmit={e => this.getPokemon(e)}>
+          <div className="form-group">
+            <input className="form-control text-center" type="text" value={this.state.searchString} onChange={this.handleChange} />
+          </div>
+          <button className="formButton btn btn-primary">
             Get them!
           </button>
-         
-            <div>
-            <p>{this.state.weight}</p>
-            {
-              this.state.abilities.map((ability) => {
-                return <p key={ability.slot}>{ability.ability.name}</p>
-              })
-              
-          }     
-              <div>
-                <img src={this.state.spriteFront} alt="" />
-              </div>
-              
-              <div>
-                <img src={this.state.spriteBack} alt=""/>
-              </div>
-            
-            </div>
+        </form>
       </div>
     );
   }

@@ -1,0 +1,16 @@
+.pokemonSection {
+    background-color: gray;
+    margin-top: 0px;
+    padding-bottom: 30px;    
+    padding-top: 30px;
+    
+}
+
+.formSection{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-control, .formButton {
+    border-radius: 0!important;    
+}

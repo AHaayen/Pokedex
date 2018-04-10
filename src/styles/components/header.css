@@ -1,5 +1,10 @@
-.App {
+.Header {
   text-align: center;
+  padding-left: 0!important;
+  padding-right: 0!important;
+  background-color: rgba(34, 34, 34, 0.425);
+  
+  
 }
 .App-header {
   background-color: #222;
