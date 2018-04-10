@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import '../src/styles/Header.css';
-import pokemonService from './services/pokemon.service';
-import Header from '../src/components/Header'
+import pokemonService from '../services/pokemon.service';
 
-class App extends Component {
+class Pokemon extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -39,7 +37,6 @@ class App extends Component {
     console.log(this.state)
     return (
       <div className="App">
-        <Header />
         <br />
         <input type="text" value={this.state.searchString} onChange={this.handleChange} />
         <button onClick={this.getPokemon}>
@@ -68,4 +65,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Pokemon;
